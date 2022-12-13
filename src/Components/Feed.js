@@ -1,5 +1,5 @@
 import Tweet from "./Tweet";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import AddTweet from "./AddTweet";
 import {useTweetContext} from "./Context/TweetContext";
 
