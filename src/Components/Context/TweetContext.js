@@ -23,11 +23,11 @@ export default function TweetContextProvider({ children }) {
 
     const getTweets = async () => {
         const res = await api.get("/tweet");
-        console.log(res)
+        console.log(res.data.tweets)
         const FetchedTweets = [...savedTweets, res.data.tweets]
         setSavedTweets(FetchedTweets);
         saveTweetsLocally()
-        setTweets(FetchedTweets[1])
+        setTweets(FetchedTweets[0])
         console.log(tweets)
     };
     const saveTweetsLocally = () =>{
