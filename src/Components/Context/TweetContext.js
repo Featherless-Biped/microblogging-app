@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { nanoid } from "nanoid";
 import api from "../api/API";
 
 export const TweetContext = createContext();
@@ -15,7 +16,7 @@ export default function TweetContextProvider({ children }) {
         const interval = setInterval(() => {
           getTweets()
           console.log(" I keep repeating myself")
-        }, 10000);
+        }, 5000);
         return () => clearInterval(interval);
       }, []);
 
@@ -26,7 +27,8 @@ export default function TweetContextProvider({ children }) {
         const FetchedTweets = [...savedTweets, res.data.tweets]
         setSavedTweets(FetchedTweets);
         saveTweetsLocally()
-        setTweets(FetchedTweets[2])
+        setTweets(FetchedTweets[1])
+        console.log(tweets)
     };
     const saveTweetsLocally = () =>{
         const jsonTweets = JSON.stringify(savedTweets)
@@ -64,9 +66,9 @@ export default function TweetContextProvider({ children }) {
             console.log(`Error: ${err.response.data.message}`);
             setShowSpinner(false);
             setShowToast(true);
-            // setToastMessage(
-            //     "There was problem adding your tweet, please try again!"
-            // );
+            setToastMessage(
+                "There was problem adding your tweet, please try again!"
+            );
             setToastMessage(err.response.data.message);
         }
     };

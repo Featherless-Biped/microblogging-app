@@ -26,6 +26,7 @@ const Feed = () => {
                 showToast={showToast}
                 setShowToast={setShowToast}
                 toastMessage={toastMessage}
+                setToastMessage={setToastMessage}
             />
             {tweets.map((tweet) => (
                 <div>
