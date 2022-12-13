@@ -1,21 +1,26 @@
-import { useState } from "react"
+import { useState, useEffect } from "react";
+import { useTweetContext } from "./Context/TweetContext";
 
-const SaveUserName = (handleAddLogIn) => {
+const SaveUserName = () => {
+    //    const  {userLogin, setUserLogin} = useContext(UserContext)
+    // const value = useMemo(()=> ({userLogin, setUserLogin}),[userLogin, setUserLogin])
+    const { logIn="", setLogIn,} = useTweetContext();
 
-    const [logIn, setLogIn] = useState('')
-    const characterLimit = 140
+    
+ 
     const handleChange = (event) => {
-        if (characterLimit - event.target.value.length >= 0) {
-            setLogIn(event.target.value);
-        }
-    };
-    const handleSaveUser = () => {
-        if (logIn.trim().length > 0) {
-            handleAddLogIn(logIn)
-            setLogIn("")
-        }
+        setLogIn(event.target.value);
     };
 
+    const handleSaveUser = (event) => {
+        console.log(logIn)
+    };
+    // useEffect(() =>{
+    //     const
+    // })
+    // const cerateLogIn = (logIn) =>{
+    //     const value = logIn
+    // }
 
     return (
         <div className="userName new">
@@ -27,11 +32,10 @@ const SaveUserName = (handleAddLogIn) => {
                 onChange={handleChange}
             ></textarea>
             <button className="submit" onClick={handleSaveUser}>
-                        Save User
-                    </button>
-            </div>
-            
-            )
-}
+                Save User
+            </button>
+        </div>
+    );
+};
 
-export default SaveUserName
+export default SaveUserName;

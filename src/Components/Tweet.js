@@ -4,7 +4,7 @@ const Tweet = ({ userName, id, content, date }) => {
     return (
         <div className="tweet" id={id}>
             <header className="tweetHeader">
-                <h6 className="userName">Jude</h6>
+                <h6 className="userName">{userName}</h6>
                 <small className="date">{date}</small>
             </header>
             <span className="content">{content}</span>
