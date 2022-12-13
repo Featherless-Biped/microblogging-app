@@ -9,12 +9,32 @@ export function useTweetContext() {
 
 export default function TweetContextProvider({ children }) {
     const [tweets, setTweets] = useState([]);
+    const [savedTweets, setSavedTweets] = useState([])
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+          getTweets()
+          console.log(" I keep repeating myself")
+        }, 10000);
+        return () => clearInterval(interval);
+      }, []);
+
 
     const getTweets = async () => {
         const res = await api.get("/tweet");
-        setTweets(res.data.tweets);
+        console.log(res)
+        const FetchedTweets = [...savedTweets, res.data.tweets]
+        setSavedTweets(FetchedTweets);
+        saveTweetsLocally()
+        setTweets(FetchedTweets[2])
     };
-    const [logIn, setLogIn] = useState("jack")
+    const saveTweetsLocally = () =>{
+        const jsonTweets = JSON.stringify(savedTweets)
+        localStorage.setItem("saved-tweets", jsonTweets)
+        const str = localStorage.getItem("saved-tweets")
+    }
+
+    const [logIn, setLogIn] = useState("")
     const [showSpinner, setShowSpinner] = useState(false);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
@@ -30,8 +50,13 @@ export default function TweetContextProvider({ children }) {
         try {
             setShowSpinner(true);
             const response = await api.post("/tweet", element);
-            const elements = [...tweets, response.data];
-            setTweets(elements);
+            const elements = [...savedTweets, response.data];
+            setSavedTweets(elements);
+            const jsonTweets = JSON.stringify(savedTweets)
+            localStorage.setItem("saved-tweets", jsonTweets)
+            const str = localStorage.getItem("saved-tweets")
+            console.log(str)
+            setTweets(JSON.parse(str))
             setShowSpinner(false);
             setShowToast(true);
             setToastMessage("Tweet succesfully added!");
